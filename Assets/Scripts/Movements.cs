@@ -5,17 +5,25 @@ using UnityEngine.InputSystem;
 
 public class Movements : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     [SerializeField] InputAction thrust;
+
+    [SerializeField] float thrustStrength = 100f;
+    Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     private void OnEnable()
     {
         thrust.Enable();
     }
-    void Update()
+    private void FixedUpdate()
     {
         if (thrust.IsPressed())
         {
-            Debug.Log("Space is pressed");
+            rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
         }
     }
 }
